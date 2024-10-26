@@ -10,6 +10,7 @@
 
 ## 🔬 Methods Used
 - ..
+List of super-resolution models:RDN, RRDN, EDSR, SRGAN, RealESRGAN, CycleGAN, DRCT.
 
 ## 🛠️ Technologies
 - ...

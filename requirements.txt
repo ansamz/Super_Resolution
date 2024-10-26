@@ -1,0 +1,6 @@
+setuptools
+tensorflow
+pandas
+numpy
+tqdm
+matplotlib
