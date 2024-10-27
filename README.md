@@ -5,8 +5,15 @@
 ## 🎯 Project Objective
 ...
 
-### Partners
+### Citation
 ...
+@InProceedings{Ignatov_2018_ECCV_Workshops,
+author = {Ignatov, Andrey and Timofte, Radu and others},
+title = {PIRM challenge on perceptual image enhancement on smartphones: report},
+booktitle = {European Conference on Computer Vision (ECCV) Workshops},
+month = {January},
+year = {2019}
+}
 
 ## 🔬 Methods Used
 - ..
@@ -20,7 +27,7 @@ List of super-resolution models:RDN, RRDN, EDSR, SRGAN, RealESRGAN, CycleGAN, DR
 
 The dataset used for this project can be downloaded from the following link:
 
-[...Dataset](...)
+[DIV2K Dataset](https://data.vision.ee.ethz.ch/cvl/DIV2K/)
 
 
 ## 📝 Project Description
