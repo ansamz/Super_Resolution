@@ -11,38 +11,37 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import random
 
-
-def residual_block(inputs, filters, kernel_size, use_bias=False):
+def residual_block(inputs, filters, kernel_size, use_bias=True):
     '''
     create the residual block used in RDN, RRDN, and EDSR
     '''
     x = layers.Conv2D(filters, kernel_size, padding='same', use_bias=use_bias)(inputs)
     x = layers.BatchNormalization()(x)
-    x = layers.Activation('relu')(x)
-    x = layers.Conv2D(filters, kernel_size, padding='same', use_bias=use_bias)(x)
+    x = layers.ReLU()(x)
+    x = layers.Conv2D(inputs.shape[-1], kernel_size, padding='same', use_bias=use_bias)(x)
     x = layers.BatchNormalization()(x)
     return layers.Add()([inputs, x])
 
-
-def build_rdn(image_size, num_blocks=8, growth_rate=32, num_channels=3, scale_factor=4):
+def build_rdn(image_size, num_blocks=8, growth_rate=64, num_channels=3, scale_factor=4):
     input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
     
-    # Feature extraction
+    # feature extraction
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
+    skip = x  # Save for global residual connection
 
-    # Dense blocks
     for i in range(num_blocks):
         x = residual_block(x, growth_rate, 3)
 
-    # Global context feature fusion
+    # global context feature fusion
     x = layers.Conv2D(64, 1, padding='same', activation='relu')(x)
+    x = layers.Add()([x, skip])  # Add global residual connection
 
-    # Reconstruction layers
+    # reconstruction layers
     for i in range(int(np.log2(scale_factor)) - 1):
         x = layers.UpSampling2D()(x)
         x = layers.Conv2D(64, 3, padding='same', activation='relu')(x)
 
-    # Final upsampling and convolution
+    # upsampling and convolution
     x = layers.UpSampling2D()(x)
     x = layers.Conv2D(num_channels, 3, padding='same', activation='sigmoid')(x)
 
@@ -52,7 +51,7 @@ def build_rdn(image_size, num_blocks=8, growth_rate=32, num_channels=3, scale_fa
 def build_rrdn(image_size, num_blocks=16, growth_rate=64, num_channels=3, scale_factor=4):
     input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
     
-    # Shallow feature extraction
+    # shallow feature extraction
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
 
     # Dense blocks
