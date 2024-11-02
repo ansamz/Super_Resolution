@@ -156,7 +156,7 @@ def build_cyclegan_generator(image_size, num_channels=3, scale_factor=4):
 def build_cyclegan_discriminator(image_size, num_channels=3):
     input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
 
-    # Discriminator layers
+    # discriminator layers
     x = layers.Conv2D(64, 4, strides=2, padding='same', activation='leaky_relu', kernel_initializer='he_normal')(input_tensor)
     x = layers.Conv2D(128, 4, strides=2, padding='same', activation='leaky_relu', kernel_initializer='he_normal')(x)
     x = layers.Conv2D(256, 4, strides=2, padding='same', activation='leaky_relu', kernel_initializer='he_normal')(x)

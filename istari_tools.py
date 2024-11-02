@@ -6,6 +6,7 @@ import os
 import tensorflow as tf
 from tensorflow.image import ssim, psnr
 import numpy as np
+import random
 
 
 def display_image_pair(lr_path, hr_path):
