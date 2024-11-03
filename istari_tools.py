@@ -9,6 +9,24 @@ import numpy as np
 import random
 
 
+def load_image(image_path, img_size):
+
+    img = Image.open(image_path)
+    img = img.resize(img_size)
+    
+    # convert to numpy array
+    img = np.array(img)
+    
+    # normalize pixel values to [0, 1]
+    img = img.astype('float32') / 255.0
+    
+    # add channel dimension if needed
+    if img.ndim == 2:
+        img = np.stack([img] * 3, axis=-1)
+    
+    return img
+
+
 def display_image_pair(lr_path, hr_path):
     lr_img = Image.open(lr_path)
     hr_img = Image.open(hr_path)

@@ -25,7 +25,7 @@ def residual_block(inputs, filters, kernel_size, use_bias=True):
 
 
 def build_rdn(image_size, num_blocks=8, growth_rate=64, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # feature extraction
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
@@ -52,7 +52,7 @@ def build_rdn(image_size, num_blocks=8, growth_rate=64, num_channels=3, scale_fa
 
 
 def build_rrdn(image_size, num_blocks=16, growth_rate=64, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # shallow feature extraction
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
@@ -72,7 +72,7 @@ def build_rrdn(image_size, num_blocks=16, growth_rate=64, num_channels=3, scale_
 
 
 def build_edsr(image_size, num_blocks=16, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # feature extraction
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
@@ -91,7 +91,7 @@ def build_edsr(image_size, num_blocks=16, num_channels=3, scale_factor=4):
 
 
 def build_srgan_generator(image_size, num_blocks=16, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
 
     # feature extraction
     x = layers.Conv2D(64, 9, padding='same', activation='relu')(input_tensor)
@@ -114,7 +114,7 @@ def build_srgan_generator(image_size, num_blocks=16, num_channels=3, scale_facto
 
 
 def build_real_esrgan_generator(image_size, num_blocks=23, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
 
     x = layers.Conv2D(64, 3, padding='same', activation='relu')(input_tensor)
 
@@ -132,7 +132,7 @@ def build_real_esrgan_generator(image_size, num_blocks=23, num_channels=3, scale
 
 
 def build_cyclegan_generator(image_size, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
 
     # downdampling layers
     x = layers.Conv2D(64, 7, padding='same', activation='relu')(input_tensor)
@@ -154,7 +154,7 @@ def build_cyclegan_generator(image_size, num_channels=3, scale_factor=4):
 
 
 def build_cyclegan_discriminator(image_size, num_channels=3):
-    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
+    input_tensor = tf.keras.Input(shape=(2040, 2040, num_channels))
 
     # discriminator layers
     x = layers.Conv2D(64, 4, strides=2, padding='same', activation='leaky_relu', kernel_initializer='he_normal')(input_tensor)
@@ -167,7 +167,7 @@ def build_cyclegan_discriminator(image_size, num_channels=3):
 
 
 def build_drct_encoder(image_size, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, num_channels))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # Downsampling layers
     x = layers.Conv2D(64, 5, padding='same', activation='relu')(input_tensor)
@@ -183,7 +183,7 @@ def build_drct_encoder(image_size, num_channels=3, scale_factor=4):
 
 
 def build_drct_decoder(image_size, num_channels=3, scale_factor=4):
-    input_tensor = tf.keras.Input(shape=(image_size // scale_factor, image_size // scale_factor, 128))
+    input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # Upsampling layers
     x = layers.UpSampling2D()(input_tensor)
