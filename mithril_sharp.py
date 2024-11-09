@@ -24,7 +24,13 @@ def residual_block(inputs, filters, kernel_size, use_bias=True):
     return layers.Add()([inputs, x])
 
 
-def build_rdn(image_size, num_blocks=8, growth_rate=64, num_channels=3, scale_factor=4):
+def build_rdn(image_size, num_blocks=8, growth_rate=16, num_channels=3, scale_factor=4):
+    '''
+    Growth rate was set up to 64 but due to to memory crashes I reduced it to 16
+    as well as replaced the UpSampling2D layer with Conv2DTranspose since it's more memory effiecient
+    https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2DTranspose
+    https://www.tensorflow.org/api_docs/python/tf/keras/layers/UpSampling2D
+    '''
     input_tensor = tf.keras.Input(shape=(image_size, image_size, num_channels))
     
     # feature extraction
@@ -40,11 +46,11 @@ def build_rdn(image_size, num_blocks=8, growth_rate=64, num_channels=3, scale_fa
 
     # reconstruction layers
     for i in range(int(np.log2(scale_factor)) - 1):
-        x = layers.UpSampling2D()(x)
-        x = layers.Conv2D(64, 3, padding='same', activation='relu')(x)
+        x = layers.Conv2DTranspose(64, 3, strides=2, padding='same', activation='relu')(x)
+    #    x = layers.Conv2D(64, 3, padding='same', activation='relu')(x)
 
     # upsampling and convolution
-    x = layers.UpSampling2D()(x)
+    x = layers.Conv2DTranspose(64, 3, strides=2, padding='same', activation='relu')(x)
     x = layers.Conv2D(num_channels, 3, padding='same', activation='tanh')(x)
     # for the final layer using "tanh" or "sigmoid" instead, as these activations produce outputs in the range [0, 1] or [-1, 1], more suitable for image intensities.
 
