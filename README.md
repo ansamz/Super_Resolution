@@ -76,6 +76,9 @@ year = {2019}
     date      = {2021}
 }
 
+Residual Dense Network for Image Super-Resolution by Yulun Zhang, Yapeng Tian, Yu Kong, Bineng Zhong, Yun Fu. Link: https://arxiv.org/pdf/1802.08797v2
+
+
 ## 🏆 Results
 
 ### RDN Model Performance
