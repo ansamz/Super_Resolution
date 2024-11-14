@@ -24,12 +24,24 @@ Image super-resolution is the process of enhancing the resolution of a low-resol
    - Features dense connections within residual blocks
    - Global feature fusion
    - Trained with both MSE and SSIM loss functions
-   
-2. **Real-ESRGAN**
-   - Enhanced version of ESRGAN for real-world applications
-   - High-order degradation modeling
-   - U-Net discriminator with spectral normalization
-   - Trained on pure synthetic data
+
+2. **Real-ESRGAN on Jetson Nano**
+   - Deployed using NCNN framework for efficient edge inference
+   - Optimized for Jetson Nano's ARM architecture
+   - Implementation based on [Qengineering's realsr-ncnn port](https://github.com/Qengineering/realsr-ncnn-Jetson-Nano)
+   - Achieves real-time inference on embedded hardware
+
+3. **EDSR (Enhanced Deep Super Resolution)**
+   - TODO: evaluate model and write conclusions
+   - Known for memory-efficient architecture
+   - Removes unnecessary modules from conventional residual networks
+   - Will test both shallow and deep variants
+
+4. **SRGAN (Super Resolution GAN)**
+   - TODO: evaluate model and write conclusions
+   - Pioneering perceptual loss approach
+   - Will implement with VGG-based feature loss
+   - Focus on generating photorealistic textures
 
 ## 🔬 Methods Used
 - Single-image super-resolution
@@ -131,27 +143,12 @@ The following models are scheduled for training and evaluation:
    - Expected to provide better feature preservation
    - Planned hyperparameters optimization
 
-2. **EDSR (Enhanced Deep Super Resolution)**
-   - Known for memory-efficient architecture
-   - Removes unnecessary modules from conventional residual networks
-   - Will test both shallow and deep variants
-
-3. **SRGAN (Super Resolution GAN)**
-   - Pioneering perceptual loss approach
-   - Will implement with VGG-based feature loss
-   - Focus on generating photorealistic textures
-
-4. **RealESRGAN**
-   - Enhanced version for real-world applications
-   - Will train with high-order degradation model
-   - Plan to implement face enhancement module
-
-5. **CycleGAN**
+2. **CycleGAN**
    - Unpaired training approach
    - Will test effectiveness for domain adaptation
    - Focus on preserving content while enhancing resolution
 
-6. **DRCT (Dense Residual Channel Transformer)**
+3. **DRCT (Dense Residual Channel Transformer)**
    - Transformer-based architecture
    - Will explore attention mechanisms
    - Plan to optimize for computational efficiency
